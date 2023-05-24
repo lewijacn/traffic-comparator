@@ -147,7 +147,9 @@ class PerformanceReport(BaseReport):
         self._primary_latencies = []
         self._shadow_latencies = []
         for resp in self._response_comparisons:
-            if resp.primary_response.latency and resp.primary_response.latency > 0:
+            print(f"This is primary latency: {resp.primary_response.latency}")
+            print(f"This is truthy: {resp.primary_response.latency is True}")
+            if (resp.primary_response.latency or resp.primary_response.latency == 0) and resp.primary_response.latency >= 0:
                 self._primary_latencies.append(resp.primary_response.latency)
             elif resp.primary_response.latency:
                 logger.info(f"a non positive latency was found: {resp.primary_response.latency}, and will be excluded"
@@ -156,7 +158,7 @@ class PerformanceReport(BaseReport):
                             f" URI: {resp.original_request.uri}, Method: {resp.original_request.http_method},"
                             f" Timestamp: {resp.original_request.timestamp}")
 
-            if resp.shadow_response.latency and resp.shadow_response.latency > 0:
+            if (resp.shadow_response.latency or resp.shadow_response.latency == 0) and resp.shadow_response.latency >= 0:
                 self._shadow_latencies.append(resp.shadow_response.latency)
             elif resp.shadow_response.latency:
                 logger.info(f"a non positive latency was found: {resp.primary_response.latency}, and will be excluded"
@@ -172,6 +174,8 @@ class PerformanceReport(BaseReport):
             self.compute()
 
         # I'm using NumPy to calculate performance metrics
+        print(self._primary_latencies)
+        print(self._shadow_latencies)
 
         return f"""
             ==Stats for primary cluster==

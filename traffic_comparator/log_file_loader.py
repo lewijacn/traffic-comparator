@@ -86,6 +86,11 @@ class ReplayerTriplesFileLoader(BaseLogFileLoader):
         latency = responsedata.pop("response_time_ms")
         statuscode = int(responsedata.pop("Status-Code"))
 
+        # if "Status-Code" in responsedata:
+        #     statuscode = int(responsedata.pop("Status-Code"))
+        # else:
+        #     statuscode = int(responsedata.pop("Request-URI"))
+
         # Discard unnecessary fields
         for field in cls.ignored_fields:
             if field in responsedata:
