@@ -147,8 +147,6 @@ class PerformanceReport(BaseReport):
         self._primary_latencies = []
         self._shadow_latencies = []
         for resp in self._response_comparisons:
-            print(f"This is primary latency: {resp.primary_response.latency}")
-            print(f"This is truthy: {resp.primary_response.latency is True}")
             if (resp.primary_response.latency or resp.primary_response.latency == 0) and resp.primary_response.latency >= 0:
                 self._primary_latencies.append(resp.primary_response.latency)
             elif resp.primary_response.latency:
@@ -174,8 +172,6 @@ class PerformanceReport(BaseReport):
             self.compute()
 
         # I'm using NumPy to calculate performance metrics
-        print(self._primary_latencies)
-        print(self._shadow_latencies)
 
         return f"""
             ==Stats for primary cluster==
